@@ -14,5 +14,5 @@ $(document).ready(function(){
 			   }); 
 			   // 异步加载图片，实现逐屏加载图片 
 			   $(".scrollLoading").scrollLoading();
-}
+})
 
