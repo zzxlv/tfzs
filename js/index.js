@@ -1,4 +1,5 @@
-for(var i=0;i<$("img").length;i++){
+$(document).ready(function(){
+	for(var i=0;i<$("img").length;i++){
 					var src=$("img").eq(i).attr("src");
 					$("img").eq(i).attr("data-url",src);
 					$("img").eq(i).attr("src","");
@@ -13,3 +14,5 @@ for(var i=0;i<$("img").length;i++){
 			   }); 
 			   // 异步加载图片，实现逐屏加载图片 
 			   $(".scrollLoading").scrollLoading();
+}
+
