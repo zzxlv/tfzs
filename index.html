@@ -13,7 +13,7 @@
 	</head>
 	
 	<body>
-		<div class="imgs-box" id="img_box">
+		<div class="category" id="category">
 			<img src="img/imgg1.jpg" />
 			<img src="img/imgg2.jpg" />
 			<img src="img/imgg3.jpg" />
@@ -57,7 +57,7 @@
 	<script>
      function funcReadImgInfo(){
                 var imgs = [];
-                var imgObj = $(".category .pic");//这里改成相应的对象
+                var imgObj = $(".category img");//这里改成相应的对象
                 for(var i=0; i<imgObj.length; i++){
                     imgs.push(imgObj.eq(i).attr('src'));
                     imgObj.eq(i).click(function(){
