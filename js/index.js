@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	 funcReadImgInfo();
+	
 	for(var i=0;i<$("img").length;i++){
 					var src=$("img").eq(i).attr("src");
 					$("img").eq(i).attr("data-url",src);
