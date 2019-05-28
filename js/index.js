@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	 funcReadImgInfo();
+	/* funcReadImgInfo();*/
 	
 	for(var i=0;i<$("img").length;i++){
 					var src=$("img").eq(i).attr("src");
