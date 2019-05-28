@@ -3,73 +3,124 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-		
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<!--<script type="text/javascript" src="js/index.js" ></script>-->
 		<title></title>
 		<style>
 			img{
 				width:100%;
 			}
 		</style>
-		<script src="js/jquery.min.js"></script>
-		<script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
+		
 	</head>
 	
-	<body class="category">
-		<img src="img/imgg1.jpg" />
-		<img src="img/imgg2.jpg" />
-		<img src="img/imgg3.jpg" />
-		<img src="img/imgg4.jpg" />
-		<img src="img/imgg5.jpg" />
-		<img src="img/imgg6.jpg" />
-		<img src="img/imgg7.jpg" />
-		<img src="img/imgg8.jpg" />
-		<img src="img/imgg9.jpg" />
-		<img src="img/imgg10.jpg" />
-		<img src="img/imgg11.jpg" />
-		<img src="img/imgg12.jpg" />
-		<img src="img/imgg13.jpg" />
-		<img src="img/imgg14.jpg" />
-		<img src="img/imgg15.jpg" />
-		<img src="img/imgg16.jpg" />
-		<img src="img/imgg17.jpg" />
-		<img src="img/imgg18.jpg" />
-		<img src="img/imgg19.jpg" />
-		<img src="img/imgg20.jpg" />
-		<img src="img/imgg21.jpg" />
-		<img src="img/imgg22.jpg" />
-		<img src="img/imgg23.jpg" />
-		<img src="img/imgg24.jpg" />
-		<img src="img/imgg25.jpg" />
-		<img src="img/imgg26.jpg" />
-		<img src="img/imgg27.jpg" />
-		<img src="img/imgg28.jpg" />
-		<img src="img/imgg29.jpg" />
-		<img src="img/imgg30.jpg" />
-		<img src="img/imgg31.jpg" />
-		<img src="img/imgg32.jpg" />
+	<body>
+		<div class="imgs-box" id="img_box">
+			<img src="img/imgg1.jpg" />
+			<img src="img/imgg2.jpg" />
+			<img src="img/imgg3.jpg" />
+			<img src="img/imgg4.jpg" />
+			<img src="img/imgg5.jpg" />
+			<img src="img/imgg6.jpg" />
+			<img src="img/imgg7.jpg" />
+			<img src="img/imgg8.jpg" />
+			<img src="img/imgg9.jpg" />
+			<img src="img/imgg10.jpg" />
+			<img src="img/imgg11.jpg" />
+			<img src="img/imgg12.jpg" />
+			<img src="img/imgg13.jpg" />
+			<img src="img/imgg14.jpg" />
+			<img src="img/imgg15.jpg" />
+			<img src="img/imgg16.jpg" />
+			<img src="img/imgg17.jpg" />
+			<img src="img/imgg18.jpg" />
+			<img src="img/imgg19.jpg" />
+			<img src="img/imgg20.jpg" />
+			<img src="img/imgg21.jpg" />
+			<img src="img/imgg22.jpg" />
+			<img src="img/imgg23.jpg" />
+			<img src="img/imgg24.jpg" />
+			<img src="img/imgg25.jpg" />
+			<img src="img/imgg26.jpg" />
+			<img src="img/imgg27.jpg" />
+			<img src="img/imgg28.jpg" />
+			<img src="img/imgg29.jpg" />
+			<img src="img/imgg30.jpg" />
+			<img src="img/imgg31.jpg" />
+			<img src="img/imgg32.jpg" />
+		</div>
+		
 	</body>
+	<script type="text/javascript" src="js/previewImage.min.js" ></script>
+	<script type="text/javascript" src="js/md5.js" ></script>
 	<script type="text/javascript" src="js/asyncimg.js" ></script>
-	<script type="text/javascript" src="js/index.js" ></script>
 	<script type="text/javascript" src="js/rem.js" ></script>
 	<script>
-		 function funcReadImgInfo(){
-                var imgs = [];
-                var imgObj = $(".category img");//这里改成相应的对象
-                for(var i=0; i<imgObj.length; i++){
-                    imgs.push(imgObj.eq(i).attr('src'));
-                    imgObj.eq(i).click(function(){
-                        var nowImgurl = $(this).attr('src');
-                            WeixinJSBridge.invoke("imagePreview",{
-                                "urls":imgs,
-                                "current":nowImgurl
-                            });
-                    });
-                }
-            }
+    var $ = {};
+    /**
+     * get multiple elements
+     * @public
+     */
+    $.all = function(selector, contextElement) {
+      var nodeList,
+        list = [];
+      if (contextElement) {
+        nodeList = contextElement.querySelectorAll(selector);
+      } else {
+        nodeList = document.querySelectorAll(selector);
+      }
+      if (nodeList && nodeList.length > 0) {
+        list = Array.prototype.slice.call(nodeList);
+      }
+      return list;
+    }
 
-            $(function(){
-                funcReadImgInfo();
-            });
+    /**
+     * delegate an event to a parent element
+     * @public
+     * @param  array     $el        parent element
+     * @param  string    eventType  name of the event
+     * @param  string    selector   target's selector
+     * @param  function  fn
+     */
+    $.delegate = function($el, eventType, selector, fn) {
+      if (!$el) { return; }
+      $el.addEventListener(eventType, function(e) {
+        var targets = $.all(selector, $el);
+        if (!targets) {
+          return;
+        }
+        // findTarget:
+        for (var i=0; i<targets.length; i++) {
+          var $node = e.target;
+          while ($node) {
+            if ($node == targets[i]) {
+              fn.call($node, e);
+              break; //findTarget;
+            }
+            $node = $node.parentNode;
+            if ($node == $el) {
+              break;
+            }
+          }
+        }
+      }, false);
+    };
 
-	</script>
+    var urls = [];
+    var imgs = $.all('img',$.all('#img_box')[0]);
+    imgs.forEach(function(v,i){
+        urls.push(v.src);
+    })
+    
+    $.delegate(document.querySelector('#img_box'), 'click','img',function(){
+        var current = this.src;
+        var obj = {
+            urls : urls,
+            current : current
+        };
+        previewImage.start(obj);
+    });
+    
+</script>
 </html>
